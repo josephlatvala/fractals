@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <complex.h>
 
-static const size_t MAX_ITERATIONS = 3000;
+static const size_t MAX_ITERATIONS = 1500;
 
 int iterate(double complex z, double complex c, size_t iterations, double complex previousPoints[]) {
 
