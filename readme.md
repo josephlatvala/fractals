@@ -4,7 +4,7 @@ Computing various fractals (currently only the Mandelbrot and Julia sets)
 
 Fun way to learn a new language
 
-## Current Implementations
+## Current implementations
 
 - Python
     - Mandelbrot set (slow, low resolution)
