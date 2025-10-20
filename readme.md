@@ -1,10 +1,10 @@
 # Fractals
 
-Computing various fractals (currently only the manelbrot and julia sets)
+Computing various fractals (currently only the Mandelbrot and Julia sets)
 
 Fun way to learn a new language
 
-## Current implimentations
+## Current Implementations
 
 - Python
     - Mandelbrot set (slow, low resolution)
@@ -17,8 +17,8 @@ Fun way to learn a new language
 ## Future plans
 
 - OCaml Julia sets
-- Combine mandelbrot and julia set into one program since they are the exact same core logic
-    - Cli args
+- Combine Mandelbrot and Julia set into one program since they are the exact same core logic
+    - CLI args
 - Render as image instead of text
     - GPU rendering?
 - Hilbert curve
