@@ -1,4 +1,4 @@
-let max_iterations = 1500
+let max_iterations = 3000
 
 type complex = {a: float; b: float}
 
@@ -42,16 +42,31 @@ let rec iterate (c: complex) (z: complex)
 let in_mandelbrot (c: complex) : bool =
     iterate c {a=0.; b=0.} max_iterations ComplexSet.empty
 
-let () =
-    for row = 0 to 34 do
-        for column = 0 to 70 do
+let in_julia (c: complex) (z: complex) : bool =
+    iterate c z max_iterations ComplexSet.empty
 
-            let c = {
+let () =
+    let in_set =
+        if Array.length Sys.argv >= 3 then
+            try let c = {
+                    a = Stdlib.float_of_string Sys.argv.(1);
+                    b = Stdlib.float_of_string Sys.argv.(2);
+                } in
+                in_julia c
+            with Failure _ -> in_mandelbrot
+        else
+            in_mandelbrot
+    in
+
+    for row = 0 to 47 do
+        for column = 0 to 110 do
+
+            let number = {
                 a = -1.4 +. 0.026 *. (float_of_int column);
-                b = -0.85 +. 0.05 *. (float_of_int row);
+                b = -1.25 +. 0.05 *. (float_of_int row);
             } in
 
-            if in_mandelbrot c then
+            if in_set number then
                 print_char '#'
             else
                 print_char '.'
