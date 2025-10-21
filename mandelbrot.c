@@ -30,8 +30,12 @@ char mandelbrot(double a, double b) {
 }
 
 int main() {
-	for (double b = -0.85; b <= 0.9; b += 0.05) {
-		for (double a = -1.5; a <= 1; a += 0.04) {
+	for (int i = 0; i <= 34; ++i) {
+		for (int j = 0; j <= 70; ++j) {
+
+			double a = -1.4 + 0.026 * j;
+			double b = -0.85 + 0.05 * i;
+
 			char result = mandelbrot(a, b);
 			printf("%c", result);
 		}
