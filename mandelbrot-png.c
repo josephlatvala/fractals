@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 		rows[y] = png_malloc(png_ptr, IMAGE_WIDTH * sizeof(png_byte) * 3);
 		for (int x = 0; x < IMAGE_WIDTH; ++x) {
 
-			double a = ((double) x / IMAGE_WIDTH  * 3) - 1.5;
+			double a = ((double) x / IMAGE_WIDTH  * 3) - 2;
 			double b = ((double) y / IMAGE_HEIGHT * 3) - 1.5;
 
 			pixel pixel_data = mandelbrot(a, b);
