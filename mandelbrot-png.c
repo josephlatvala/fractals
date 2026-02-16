@@ -3,8 +3,8 @@
 #include <png.h>
 #include <complex.h>
 
-const int IMAGE_WIDTH = 256;
-const int IMAGE_HEIGHT = 256;
+const int DEFAULT_IMAGE_WIDTH  = 256;
+const int DEFAULT_IMAGE_HEIGHT = 256;
 
 const char* DEFAULT_IMAGE_NAME = "mandelbrot.png";
 
@@ -49,7 +49,23 @@ int main(int argc, char** argv) {
 
 	const char* image_name = DEFAULT_IMAGE_NAME;
 
+	int image_width  = DEFAULT_IMAGE_WIDTH;
+	int image_height = DEFAULT_IMAGE_HEIGHT;
+
 	if (argc >= 2) image_name = argv[1];
+
+	if (argc >= 4) {
+		int arg_width  = atoi(argv[2]);
+		int arg_height = atoi(argv[3]);
+
+		if (arg_width <= 0 || arg_height <= 0) {
+			perror("invalid argument");
+		}
+		else {
+			image_width  = arg_width;
+			image_height = arg_height;
+		}
+	}
 
 	FILE* fp = fopen(image_name, "wb");
 	if (!fp) {
@@ -78,7 +94,7 @@ int main(int argc, char** argv) {
 	}
 
 	png_set_IHDR(png_ptr, png_info_ptr,
-		IMAGE_WIDTH, IMAGE_HEIGHT,
+		image_width, image_height,
 		8, PNG_COLOR_TYPE_RGB,
 		PNG_INTERLACE_NONE,
 		PNG_COMPRESSION_TYPE_DEFAULT,
@@ -86,15 +102,15 @@ int main(int argc, char** argv) {
 
 	printf("Rendering to %s\n", image_name);
 
-	png_byte** rows = png_malloc(png_ptr, IMAGE_HEIGHT * sizeof(png_byte*));
-	for (int y = 0; y < IMAGE_HEIGHT; ++y) {
+	png_byte** rows = png_malloc(png_ptr, image_height * sizeof(png_byte*));
+	for (int y = 0; y < image_height; ++y) {
 		printf("Rendering row %d\r", y);
 		fflush(stdout);
-		rows[y] = png_malloc(png_ptr, IMAGE_WIDTH * sizeof(png_byte) * 3);
-		for (int x = 0; x < IMAGE_WIDTH; ++x) {
+		rows[y] = png_malloc(png_ptr, image_width * sizeof(png_byte) * 3);
+		for (int x = 0; x < image_width; ++x) {
 
-			double a = ((double) x / IMAGE_WIDTH  * 3) - 2;
-			double b = ((double) y / IMAGE_HEIGHT * 3) - 1.5;
+			double a = ((double) x / image_width  * 3) - 2;
+			double b = ((double) y / image_height * 3) - 1.5;
 
 			pixel pixel_data = mandelbrot(a, b);
 
