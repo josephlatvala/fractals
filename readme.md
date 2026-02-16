@@ -6,13 +6,22 @@ Fun way to learn a new language
 
 ## Current implementations
 
+All implementations are in ascii unless otherwise noted
+
 - Python
     - Mandelbrot set (slow, low resolution)
 - C
     - Mandelbrot set
+        - Has a png implementation!
     - Julia sets
 - OCaml
     - Mandelbrot set
+
+## PNG implementation
+
+`mandelbrot-png.c` renders an image using libpng
+
+![A low resolution rendering of the mandelbrot set](example-output/mandelbrot.png)
 
 ## Future plans
 
