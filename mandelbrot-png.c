@@ -6,7 +6,7 @@
 const int IMAGE_WIDTH = 256;
 const int IMAGE_HEIGHT = 256;
 
-const char* IMAGE_NAME = "test.png";
+const char* DEFAULT_IMAGE_NAME = "test.png";
 
 static const size_t MAX_ITERATIONS = 1500;
 
@@ -46,7 +46,12 @@ pixel mandelbrot(double a, double b) {
 }
 
 int main(int argc, char** argv) {
-	FILE* fp = fopen(IMAGE_NAME, "wb");
+
+	const char* image_name = DEFAULT_IMAGE_NAME;
+
+	if (argc >= 2) image_name = argv[1];
+
+	FILE* fp = fopen(image_name, "wb");
 	if (!fp) {
 		perror("file init");
 		exit(1);
@@ -79,7 +84,7 @@ int main(int argc, char** argv) {
 		PNG_COMPRESSION_TYPE_DEFAULT,
 		PNG_FILTER_TYPE_DEFAULT);
 
-	printf("Rendering to %s\n", IMAGE_NAME);
+	printf("Rendering to %s\n", image_name);
 
 	png_byte** rows = png_malloc(png_ptr, IMAGE_HEIGHT * sizeof(png_byte*));
 	for (int y = 0; y < IMAGE_HEIGHT; ++y) {
