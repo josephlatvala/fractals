@@ -8,7 +8,7 @@ const int DEFAULT_IMAGE_HEIGHT = 256;
 
 const char* DEFAULT_IMAGE_NAME = "mandelbrot.png";
 
-static const size_t MAX_ITERATIONS = 1500;
+static const size_t DEFAULT_MAX_ITERATIONS = 1500;
 
 typedef struct{
 	int red;
@@ -16,9 +16,9 @@ typedef struct{
 	int blue;
 } pixel;
 
-int iterate(double complex z, double complex c, size_t iterations, double complex previousPoints[]) {
+int iterate(double complex z, double complex c, size_t iterations, double complex previousPoints[], size_t max_iterations) {
 
-	if (iterations >= MAX_ITERATIONS)
+	if (iterations >= max_iterations)
 		return 0;
 
 	z = z*z + c;
@@ -29,13 +29,13 @@ int iterate(double complex z, double complex c, size_t iterations, double comple
 
 	previousPoints[iterations] = z;
 
-	return iterate(z, c, iterations + 1, previousPoints);
+	return iterate(z, c, iterations + 1, previousPoints, max_iterations);
 }
 
-pixel mandelbrot(double a, double b) {
+pixel mandelbrot(double a, double b, size_t max_iterations) {
 
-	double complex previousPoints[MAX_ITERATIONS];
-	int isInSet = iterate(0, a + b * I, 0, previousPoints);
+	double complex previousPoints[max_iterations];
+	int isInSet = iterate(0, a + b * I, 0, previousPoints, max_iterations);
 
 	const pixel WHITE = {.red = 255, .green=255, .blue=255};
 	const pixel BLACK = {.red = 0, .green=0, .blue=0};
@@ -52,6 +52,8 @@ int main(int argc, char** argv) {
 	int image_width  = DEFAULT_IMAGE_WIDTH;
 	int image_height = DEFAULT_IMAGE_HEIGHT;
 
+	int max_iterations = DEFAULT_MAX_ITERATIONS;
+
 	if (argc >= 2) image_name = argv[1];
 
 	if (argc >= 4) {
@@ -64,6 +66,16 @@ int main(int argc, char** argv) {
 		else {
 			image_width  = arg_width;
 			image_height = arg_height;
+		}
+	}
+
+	if (argc >= 5) {
+		int arg_iterations = atoi(argv[4]);
+		if (arg_iterations <= 0) {
+			perror("invalid argument");
+		}
+		else {
+			max_iterations = arg_iterations;
 		}
 	}
 
@@ -112,7 +124,7 @@ int main(int argc, char** argv) {
 			double a = ((double) x / image_width  * 3) - 2;
 			double b = ((double) y / image_height * 3) - 1.5;
 
-			pixel pixel_data = mandelbrot(a, b);
+			pixel pixel_data = mandelbrot(a, b, max_iterations);
 
 			rows[y][x*3]   = pixel_data.red;
 			rows[y][x*3+1] = pixel_data.green;
