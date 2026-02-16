@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
 
 	png_byte** rows = png_malloc(png_ptr, image_height * sizeof(png_byte*));
 	for (int y = 0; y < image_height; ++y) {
-		printf("Rendering row %d\r", y);
+		printf("Rendering row %d\r", y + 1);
 		fflush(stdout);
 		rows[y] = png_malloc(png_ptr, image_width * sizeof(png_byte) * 3);
 		for (int x = 0; x < image_width; ++x) {

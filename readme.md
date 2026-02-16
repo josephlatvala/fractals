@@ -28,6 +28,10 @@ All implementations are in ascii unless otherwise noted
 - OCaml Julia sets
 - Combine Mandelbrot and Julia set into one program since they are the exact same core logic
     - CLI args
+- Images in OCaml
+    - Custom C bindings?
+- Use `pthread.h` to increase cpu utilization
+- fractal canopy (png image)
 - Render as image instead of text
     - GPU rendering?
 - Hilbert curve
