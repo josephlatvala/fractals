@@ -6,7 +6,7 @@
 const int IMAGE_WIDTH = 256;
 const int IMAGE_HEIGHT = 256;
 
-const char* DEFAULT_IMAGE_NAME = "test.png";
+const char* DEFAULT_IMAGE_NAME = "mandelbrot.png";
 
 static const size_t MAX_ITERATIONS = 1500;
 
